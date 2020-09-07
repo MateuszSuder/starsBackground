@@ -54,7 +54,7 @@ function handleStar(star: Sprite){
         it++;
         if(star.alpha >= 1){
             setTimeout(function(){
-                show.stop();
+                show.destroy();
                 hide.start();
             }, time);
         }
@@ -65,7 +65,8 @@ function handleStar(star: Sprite){
         }
         it--;
         if(star.alpha <= 0){
-            hide.stop();
+            star.destroy();
+            hide.destroy();
         }
     })
     app.stage.addChild(star)
