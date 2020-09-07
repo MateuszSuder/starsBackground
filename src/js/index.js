@@ -2,7 +2,13 @@ import { Application, Texture, Sprite, Ticker, filters } from 'pixi.js-legacy';
 import { randomInt } from './functions';
 export var app = new Application({ transparent: true });
 document.body.appendChild(app.view);
-var starT = Texture.from('src/img/star.png');
+var starT;
+if (window.devicePixelRatio <= 1.5) {
+    starT = Texture.from('src/img/star.png');
+}
+else {
+    starT = Texture.from('src/img/star50px.png');
+}
 var blur = new filters.BlurFilter;
 blur.blur = 3 / window.devicePixelRatio;
 function resize() {
@@ -12,7 +18,7 @@ resize();
 window.onresize = resize;
 var it = 0;
 app.ticker.add(function (delta) {
-    if (it % 10 == 0) {
+    if (it % parseInt((app.ticker.FPS / 5).toFixed(0)) == 0) {
         var star = Sprite.from(starT);
         handleStar(star);
     }
@@ -25,14 +31,14 @@ function handleStar(star) {
     star.position.x = x;
     star.position.y = y;
     star.alpha = 0;
-    star.width = star.height = window.innerWidth / 200 + randomInt(-1 * (window.innerWidth / 500), (window.innerWidth / 500));
+    star.width = star.height = window.innerWidth / 200 + randomInt(-1 * (window.innerWidth / 500), (window.innerWidth / 250));
     star.filters = [blur];
     var show = new Ticker();
     var hide = new Ticker();
     var it = 0;
     show.start();
     show.add(function (delta) {
-        if (it % 30) {
+        if (it % parseInt((show.FPS / 30).toFixed(0)) == 0) {
             star.alpha += 0.01;
         }
         it++;
@@ -44,7 +50,7 @@ function handleStar(star) {
         }
     });
     hide.add(function (delta) {
-        if (it % 10) {
+        if (it % parseInt((show.FPS / 30).toFixed(0)) == 0) {
             star.alpha -= 0.01;
         }
         it--;
