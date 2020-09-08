@@ -43,8 +43,9 @@ function handleStar(star) {
         }
         it++;
         if (star.alpha >= 1) {
+            show.stop();
+            show.destroy();
             setTimeout(function () {
-                show.destroy();
                 hide.start();
             }, time);
         }
