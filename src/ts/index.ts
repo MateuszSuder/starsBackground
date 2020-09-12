@@ -29,7 +29,8 @@ let it: number = 0;
 app.ticker.add((delta) => {
     if(it % parseInt((app.ticker.FPS / 5).toFixed(0)) == 0){
         let star = Sprite.from(starT);
-        handleStar(star)
+        handleStar(star);
+        it = 0;
     }
     it++;
 })
